@@ -9,10 +9,10 @@ repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs 
 # Remove existing local_manifests
 crave run --no-patch -- "rm -rf .repo/local_manifests && \
 # Initialize repo with specified manifest
-repo init -u https://github.com/Evolution-X/manifest -b udc --depth=1 ;\
+repo init -u https://github.com/PixelExperience/manifest -b fourteen --depth=1 ;\
 
 # Clone local_manifests repository
-git clone https://github.com/Lafactorial/local_manifest --depth 1 -b Evo-14 .repo/local_manifests ;\
+git clone https://github.com/mdalam073/local_manifest --depth 1 -b PixelExperience-14 .repo/local_manifest ;\
 
 # Removals
 rm -rf device/xiaomi/msm8953-common prebuilts/clang/host/linux-x86 external/chromium-webview && \
@@ -25,10 +25,10 @@ repo sync -c -j\$(nproc --all) --no-clone-bundle --no-tags --optimized-fetch --p
 source build/envsetup.sh && \
 
 # Lunch configuration
-lunch evolution_tissot-userdebug ;\
+lunch aosp_tissot-userdebug ;\
 
 croot ;\
-mka evolution ; \
+mka bacon ; \
 # echo "Date and time:" ; \
 
 # Print out/build_date.txt
