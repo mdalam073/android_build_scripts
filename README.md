@@ -12,4 +12,4 @@ or if you have one running,
 ```mkdir rom_name; cd rom_name```
 
 ## Pull and Run this script
-```$ curl -sf https://raw.githubusercontent.com/Lafactorial/android_build_scripts/evox-tissot/build.sh | sh```
+```$ curl -sf https://raw.githubusercontent.com/mdalam073/android_build_scripts/PE14-tissot/build.sh | sh```
