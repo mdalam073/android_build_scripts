@@ -28,7 +28,7 @@ source build/envsetup.sh && \
 lunch aosp_tissot-userdebug ;\
 
 croot ;\
-mka bacon ; \
+mka bacon -jX ; \
 # echo "Date and time:" ; \
 
 # Print out/build_date.txt
