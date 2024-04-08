@@ -23,7 +23,7 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b PixelExperien
 source build/envsetup.sh && \
 
 # Lunch configuration
-lunch aosp_tissot-userdebug ;\
+lunch aosp-tissot-userdebug ;\
 
 croot ;\
 mka bacon ; \
