@@ -2,6 +2,9 @@
 
 set -e
 
+# Clean the build environment
+make clean
+
 # Remove existing local_manifests (if needed)
 rm -rf .repo/local_manifests
 
