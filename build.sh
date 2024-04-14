@@ -23,7 +23,7 @@ git clone https://github.com/mdalam073/local_manifest.git-14 .repo/local_manifes
 . build/envsetup.sh && \
 
 # Lunch configuration
-lunch derp_tissot-user ;\
+lunch derp_tissot-ap1a-userdebug ;\
 
 croot ;\
 mka derp ; \
