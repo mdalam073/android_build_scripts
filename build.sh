@@ -11,8 +11,8 @@ crave run --clean --no-patch -- "rm -rf .repo/local_manifests && \
 # Initialize repo with specified manifest
 repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14 --depth=1 ;\
 
-# Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest.git-14 .repo/local_manifests ;\
+# Clone local_manifest repository
+git clone https://github.com/mdalam073/local_manifest.git-14 .repo/local_manifest ;\
 
 
 # Sync the repositories
