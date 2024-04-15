@@ -7,7 +7,7 @@ repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14 --git-lfs --dep
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
-crave run --no-patch -- "rm -rf .repo/local_manifests && \
+crave run --clean --no-patch -- "rm -rf .repo/local_manifests && \
 # Initialize repo with specified manifest
 repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14 --depth=1 ;\
 
@@ -18,6 +18,8 @@ git clone https://github.com/mdalam073/local_manifest.git-14 .repo/local_manifes
 # Sync the repositories
 /opt/crave/resync.sh && \
 
+# Removals
+rm -rf prebuilts
 
 # Set up build environment
 . build/envsetup.sh && \
