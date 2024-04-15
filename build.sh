@@ -19,7 +19,7 @@ git clone https://github.com/mdalam073/local_manifest.git-14 .repo/local_manifes
 /opt/crave/resync.sh && \
 
 # Removals
-rm -rf prebuilts
+rm -rf platform/prebuilts/rust
 
 # Set up build environment
 . build/envsetup.sh && \
