@@ -3,7 +3,7 @@
 set -e
 
 # Initialize repo with specified manifest
-repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14 --git-lfs --depth=1
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
@@ -12,7 +12,7 @@ crave run --clean --no-patch -- "rm -rf .repo/local_manifests && \
 repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14 --depth=1 ;\
 
 # Clone local_manifest repository
-git clone https://github.com/mdalam073/local_manifest.git-14 .repo/local_manifest ;\
+git clone https://github.com/mdalam073/local_manifest.git -b derp-14-tissot .repo/local_manifest ;\
 
 
 # Sync the repositories
