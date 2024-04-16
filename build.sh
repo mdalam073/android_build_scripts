@@ -12,7 +12,7 @@ crave run --clean --no-patch -- "rm -rf .repo/local_manifests && \
 repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14 --depth=1 ;\
 
 # Clone local_manifest repository
-git clone https://github.com/mdalam073/local_manifest.git -b derp-14-tissot .repo/local_manifest ;\
+git clone https://github.com/mdalam073/local_manifest.git -b Derp-14-tissot .repo/local_manifest ;\
 
 
 # Sync the repositories
