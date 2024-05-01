@@ -25,7 +25,7 @@ rm -rf platform/prebuilts/rust
 . build/envsetup.sh && \
 
 # Lunch configuration
-lunch derp_tissot-userdebug ;\
+lunch derp_tissot-ap1a-userdebug ;\
 
 croot ;\
 mka derp ; \
