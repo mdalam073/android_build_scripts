@@ -25,7 +25,7 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 . build/envsetup.sh && \
 
 # Lunch configuration
-brunch tissot ;\
+lunch voltage_tissot-ap1a-<flavor> ;\
 
 croot ;\
 # mka bacon ; \
