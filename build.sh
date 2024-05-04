@@ -28,7 +28,7 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 brunch tissot ;\
 
 croot ;\
-#mka evolution ; \
+# mka bacon ; \
 # echo "Date and time:" ; \
 
 # Print out/build_date.txt
