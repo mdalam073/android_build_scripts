@@ -17,6 +17,9 @@ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags && \
 # Clone local_manifests repository
 git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 .repo/local_manifests && \
 
+# Removals
+# rm -rf device/xiaomi/msm8953-common prebuilts/clang/host/linux-x86 external/chromium-webview && \
+
 # Run resync script
 /opt/crave/resync.sh && \  
 
