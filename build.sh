@@ -11,12 +11,11 @@ crave run --no-patch -- "rm -rf .repo/local_manifests && \
 # Initialize repo with specified manifest
 repo init -u https://github.com/VoltageOS/manifest.git -b 14 --git-lfs --depth=1
 
+# Sync the repositories
+repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags && \  
 
 # Clone local_manifests repository
 git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 .repo/local_manifests && \
-
-# Sync the repositories
-repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags && \  
 
 # Run resync script
 /opt/crave/resync.sh && \  
