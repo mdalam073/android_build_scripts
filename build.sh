@@ -9,25 +9,41 @@ repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --de
 # Remove existing local_manifests
 crave run --no-patch -- "rm -rf .repo/local_manifests && \
 # Initialize repo with specified manifest
-repo init -u https://github.com/VoltageOS/manifest.git -b 14 --git-lfs --depth=1
-
-# Sync the repositories
-repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags && \  
+repo init -u https://github.com/VoltageOS/manifest.git -b 14 --git-lfs --depth=1 ;\
 
 # Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 .repo/local_manifests && \
+git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 .repo/local_manifests ;\
 
-# Removals
-# rm -rf device/xiaomi/msm8953-common prebuilts/clang/host/linux-x86 external/chromium-webview && \
+# Sync the repositories
+/opt/crave/resync.sh && \ 
 
-# Run resync script
-/opt/crave/resync.sh && \  
 
 # Set up build environment
-. build/envsetup.sh && \
+source build/envsetup.sh && \
 
-# Lunch configuration
-lunch voltage_tissot-ap1a-userdebug && \
+croot ;\
+brunch tissot ; \
+# echo "Date and time:" ; \
+
+# Print out/build_date.txt
+# cat out/build_date.txt; \
+
+# Print SHA256
+# sha256sum out/target/product/*/*.zip"
 
 # Clean up
-rm -rf tissot/*"
+# rm -rf tissot/*
+
+
+
+# Pull generated zip files
+# crave pull out/target/product/*/*.zip
+
+# Pull generated img files
+# crave pull out/target/product/*/*.img
+
+# Upload zips to Telegram
+# telegram-upload --to sdreleases tissot/*.zip
+
+#Upload to Github Releases
+#curl -sf https://raw.githubusercontent.com/Meghthedev/Releases/main/headless.sh | sh
