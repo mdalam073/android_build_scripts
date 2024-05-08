@@ -27,7 +27,7 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 . build/envsetup.sh && \
 
 # Lunch configuration
-brunch tissot && \
+lrunch voltage_tissot-ap1a-userdebug && \
 
 # Clean up
 rm -rf tissot/*"
