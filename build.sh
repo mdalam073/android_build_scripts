@@ -22,7 +22,8 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 source build/envsetup.sh && \
 
 croot ;\
-brunch tissot ; \
+lunch voltage_tissot-ap1a-userdebug ; \
+mka bacon ; \
 # echo "Date and time:" ; \
 
 # Print out/build_date.txt
