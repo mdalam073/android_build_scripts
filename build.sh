@@ -21,8 +21,10 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 # Set up build environment
 source build/envsetup.sh && \
 
+# Lunch configuration
+lunch lineage_tissot-userdebug ;\
+
 croot ;\
-lunch voltage_tissot-ap1a-userdebug ; \
 mka bacon ; \
 # echo "Date and time:" ; \
 
