@@ -50,8 +50,3 @@ mka derp ; \
 
 #Upload to Github Releases
 #curl -sf https://raw.githubusercontent.com/mdalam073/Releases/main/headless.sh | sh
-# Upload zips to Telegram
-# telegram-upload --to sdreleases tissot/*.zip
-
-#Upload to Github Releases
-#curl -sf https://raw.githubusercontent.com/mdalam073/Releases/main/headless.sh | sh
