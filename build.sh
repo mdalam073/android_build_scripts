@@ -25,7 +25,7 @@ source build/envsetup.sh && \
 lunch derp_tissot-ap1a-userdebug ;\
 
 croot ;\
-mka derp ; \
+mka bacon ; \
 # echo "Date and time:" ; \
 
 # Print out/build_date.txt
