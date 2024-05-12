@@ -19,13 +19,13 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b Derp-14-tisso
 
 
 # Set up build environment
-source build/envsetup.sh && \
+. build/envsetup.sh && \
 
 # Lunch configuration
-lunch derp_tissot-ap1a-userdebug ;\
+lunch derp_tissot-user ;\
 
 croot ;\
-mka bacon ; \
+mka derp ; \
 # echo "Date and time:" ; \
 
 # Print out/build_date.txt
