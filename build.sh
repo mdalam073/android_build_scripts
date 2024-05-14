@@ -17,15 +17,17 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b Derp-14-tisso
 # Sync the repositories
 /opt/crave/resync.sh && \ 
 
+# Generate IDE project files
+make idegen && development/tools/idegen/idegen.sh && \
 
 # Set up build environment
-. build/envsetup.sh && \
+source build/envsetup.sh && \
 
 # Lunch configuration
-lunch derp_tissot-user ;\
+lunch derp_tissot-userdebug ;\
 
 croot ;\
-mka derp ; \
+mka bacon ; \
 # echo "Date and time:" ; \
 
 # Print out/build_date.txt
