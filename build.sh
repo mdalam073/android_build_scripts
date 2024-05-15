@@ -22,7 +22,7 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b Derp-14-tisso
 source build/envsetup.sh && \
 
 # Lunch configuration
-lunch derp_tissot-userdebug ;\
+lunch derp_tissot-ap1a-userdebug ;\
 
 croot ;\
 mka derp ; \
