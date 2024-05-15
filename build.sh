@@ -3,7 +3,7 @@
 set -e
 
 # Initialize repo with specified manifest
-repo init -u https://github.com/DerpFest-AOSP/manifest -b 14 --git-lfs --depth=1
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
