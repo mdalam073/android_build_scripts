@@ -22,7 +22,7 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b infinity-x-ti
 source build/envsetup.sh && \
 
 # Lunch configuration
-lunch infinity_tissot-userdebug ;\
+lunch infinity_tissot-ap1a-userdebug ;\
 
 croot ;\
 make bacon ; \
