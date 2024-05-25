@@ -9,10 +9,10 @@ repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --de
 # Remove existing local_manifests
 crave run --no-patch -- "rm -rf .repo/local_manifests && \
 # Initialize repo with specified manifest
-repo init -u https://github.com/VoltageOS/manifest.git -b 14 --git-lfs --depth=1 ;\
+repo init -u https://github.com/ProjectInfinity-X/manifest -b QPR2 --git-lfs --depth=1 ;\
 
 # Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 .repo/local_manifests ;\
+git clone https://github.com/mdalam073/local_manifest --depth 1 -b infinity-x-tissot .repo/local_manifests ;\
 
 # Sync the repositories
 /opt/crave/resync.sh && \ 
@@ -22,10 +22,10 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 source build/envsetup.sh && \
 
 # Lunch configuration
-lunch voltage_tissot-ap1a-userdebug ;\
+lunch infinity_tissot-userdebug ;\
 
 croot ;\
-mka bacon ; \
+make bacon ; \
 # echo "Date and time:" ; \
 
 # Print out/build_date.txt
