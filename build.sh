@@ -17,13 +17,14 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b superior-tiss
 
 # Sync the repositories
 /opt/crave/resync.sh && \ 
+sync -c -j16 --force-sync --no-clone-bundle --no-tags --prune \
 
 
 # Set up build environment
 . build/envsetup.sh && \
 
 # Lunch configuration
-breakfast tissot ;\
+lunch tissot-ap1a-userdebug ;\
 
 croot ;\
 m bacon ; \
