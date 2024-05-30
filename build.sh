@@ -3,12 +3,11 @@
 set -e
 
 # Initialize repo with specified manifest
-repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs --depth=1
+repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
 crave run --no-patch -- "rm -rf .repo/local_manifests && \
-
 # Initialize repo with specified manifest
 repo init -u https://github.com/SuperiorOS/manifest.git -b fourteen --git-lfs --depth=1 ;\
 
@@ -17,7 +16,7 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b superior-tiss
 
 # Sync the repositories
 /opt/crave/resync.sh && \ 
-sync -c -j16 --force-sync --no-clone-bundle --no-tags --prune \
+sync --force-sync \
 
 
 # Set up build environment
