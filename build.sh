@@ -26,13 +26,13 @@ repo sync --force-sync \
 make clean && \
 
 # Lunch configuration
-lunch superior_tissot-ap1a-userdebug ;\
+breakfast tissot ;\
 
 # Change root to build environment
 croot && \
 
 # Build the target
-mka bacon && \
+m bacon && \
 
 # Print SHA256 checksums of all .zip files in the output directory
 sha256sum out/target/product/*/*.zip && \
