@@ -33,13 +33,13 @@ mka bacon ; \
 # cat out/build_date.txt ;\
 
 # Print SHA256
-# sha256sum out/target/product/*/*.zip" ;\
+# sha256sum out/target/product/*/*.zip" \
 
 # Pull generated zip files
-# crave pull out/target/product/*/*.zip ;\
+# crave pull out/target/product/*/*.zip \
 
 # Pull generated img files
-# crave pull out/target/product/*/*.img ;\
+# crave pull out/target/product/*/*.img \
 
 #Upload to Github Releases
 #curl -sf https://raw.githubusercontent.com/mdalam073/Releases/main/headless.sh | sh 
