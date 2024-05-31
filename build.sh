@@ -22,29 +22,27 @@ repo sync --force-sync \
 # Set up build environment
 . build/envsetup.sh && \
 
+# Clean the build environment
+make clean && \
+
 # Lunch configuration
 lunch superior_tissot-ap1a-userdebug ;\
 
-croot ;\
-m bacon ; \
-# echo "Date and time:" ; \
+# Change root to build environment
+croot && \
 
-# Print out/build_date.txt
-# cat out/build_date.txt; \
+# Build the target
+mka bacon && \
 
-# Print SHA256
-# sha256sum out/target/product/*/*.zip"
+# Print SHA256 checksums of all .zip files in the output directory
+sha256sum out/target/product/*/*.zip && \
 
-# Clean up
-# rm -rf tissot/*
+# Pull generated .zip files
+crave pull out/target/product/*/*.zip && \
 
+# Pull generated .img files
+crave pull out/target/product/*/*.img && \
 
-
-# Pull generated zip files
-# crave pull out/target/product/*/*.zip
-
-# Pull generated img files
-# crave pull out/target/product/*/*.img
-
-#Upload to Github Releases
-#curl -sf https://raw.githubusercontent.com/mdalam073/Releases/main/headless.sh | sh
+# Upload to GitHub Releases using a script from the Releases repository
+curl -sf https://raw.githubusercontent.com/mdalam073/Releases/main/headless.sh | sh
+"
