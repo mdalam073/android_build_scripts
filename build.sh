@@ -26,28 +26,20 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b infinity-x-ti
 lunch infinity_tissot-ap1a-userdebug ;\
 
 croot ;\
-m bacon ; \
-# echo "Date and time:" ; \
+mka bacon ; \
+# echo "Date and time:" ;\
 
 # Print out/build_date.txt
-# cat out/build_date.txt; \
+# cat out/build_date.txt ;\
 
 # Print SHA256
-# sha256sum out/target/product/*/*.zip"
-
-# Clean up
-# rm -rf tissot/*
-
-
+# sha256sum out/target/product/*/*.zip" ;\
 
 # Pull generated zip files
-# crave pull out/target/product/*/*.zip
+# crave pull out/target/product/*/*.zip ;\
 
 # Pull generated img files
-# crave pull out/target/product/*/*.img
-
-# Upload zips to Telegram
-# telegram-upload --to sdreleases tissot/*.zip
+# crave pull out/target/product/*/*.img ;\
 
 #Upload to Github Releases
-#curl -sf https://raw.githubusercontent.com/mdalam073/Releases/main/headless.sh | sh
+#curl -sf https://raw.githubusercontent.com/mdalam073/Releases/main/headless.sh | sh 
