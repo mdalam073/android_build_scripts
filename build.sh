@@ -29,7 +29,7 @@ lunch infinity_tissot-ap1a-userdebug && \
 croot && \
 
 # Build the target
-mka bacon && \
+make bacon && \
 
 # Print SHA256 checksums of all .zip files in the output directory
 sha256sum out/target/product/*/*.zip && \
