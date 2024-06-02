@@ -42,3 +42,4 @@ crave pull out/target/product/*/*.img && \
 
 # Upload to GitHub Releases using a script from the Releases repository
 curl -sf https://raw.githubusercontent.com/mdalam073/Releases/main/headless.sh | sh
+"
