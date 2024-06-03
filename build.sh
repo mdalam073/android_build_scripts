@@ -23,7 +23,7 @@ make clean && \
 # Set the TARGET_RELEASE variable explicitly
 export TARGET_RELEASE=ap1a && \
 # Lunch configuration
-lunch superior_tissot-$TARGET_RELEASE-userdebug && \
+lunch superior_tissot-userdebug && \
 # Change root to build environment
 croot && \
 # Build the target
