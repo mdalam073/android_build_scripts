@@ -21,7 +21,7 @@ source build/envsetup.sh && \
 # Clean the build environment
 make clean && \
 # Lunch configuration
-brunch tissot && \
+lunch superior_tissot-userdebug && \
 # Change root to build environment
 croot && \
 # Build the target
