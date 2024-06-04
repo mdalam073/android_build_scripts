@@ -20,10 +20,8 @@ repo sync --force-sync && \
 source build/envsetup.sh && \
 # Clean the build environment
 make clean && \
-# Set the TARGET_RELEASE variable explicitly
-export TARGET_RELEASE=ap1a && \
 # Lunch configuration
-lunch superior_tissot-userdebug && \
+brunch tissot && \
 # Change root to build environment
 croot && \
 # Build the target
