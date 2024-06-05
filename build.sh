@@ -17,7 +17,7 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b superior-tiss
 # Set up build environment
 source build/envsetup.sh && \
 # Lunch configuration
-lunch superior_tissot-userdebug && \
+lunch superior_tissot-ap1a-userdebug && \
 croot && \
 repo forall -c 'git lfs install && git lfs pull && git lfs checkout' && \
 m bacon && \
