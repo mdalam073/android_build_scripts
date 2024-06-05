@@ -3,42 +3,33 @@
 set -e
 
 # Initialize repo with specified manifest
-repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1 ;\
+repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
 crave run --no-patch -- "rm -rf .repo/local_manifests && \
 # Initialize repo with specified manifest
-repo init -u https://github.com/SuperiorOS/manifest -b fourteen --git-lfs --depth=1 && ;\
-
+repo init -u https://github.com/SuperiorOS/manifest -b fourteen --git-lfs --depth=1 && \
 # Clone local_manifests repository
 git clone https://github.com/mdalam073/local_manifest --depth 1 -b superior-tissot .repo/local_manifests && \
-
 # Sync the repositories
 /opt/crave/resync.sh && \
-
-
 # Set up build environment
 source build/envsetup.sh && \
-
 # Lunch configuration
-lunch superior_tissot-ap1a-userdebug ;\
-
-croot ;\
-repo forall -c 'git lfs install && git lfs pull && git lfs checkout' ;\
-m bacon ; \
-# echo "Date and time:" ; \
-
+lunch superior_tissot-userdebug && \
+croot && \
+repo forall -c 'git lfs install && git lfs pull && git lfs checkout' && \
+m bacon && \
+# echo "Date and time:" && \
 # Print out/build_date.txt
-# cat out/build_date.txt; \
-
+# cat out/build_date.txt && \
 # Print SHA256
 # sha256sum out/target/product/*/*.zip"
+"
 
 # Clean up
 # rm -rf tissot/*
-
-
 
 # Pull generated zip files
 # crave pull out/target/product/*/*.zip
@@ -49,5 +40,5 @@ m bacon ; \
 # Upload zips to Telegram
 # telegram-upload --to sdreleases tissot/*.zip
 
-#Upload to Github Releases
-#curl -sf https://raw.githubusercontent.com/Meghthedev/Releases/main/headless.sh | sh
+# Upload to Github Releases
+# curl -sf https://raw.githubusercontent.com/Meghthedev/Releases/main/headless.sh | sh
