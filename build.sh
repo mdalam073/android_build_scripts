@@ -69,8 +69,8 @@ crave run --no-patch -- "
     # Install and pull Git LFS files
     repo forall -c 'git lfs install && git lfs pull && git lfs checkout'
 
-    # Start the build process
-    m bacon
+    # Start the build process using make bacon
+    make bacon
 "
 
 # Clean up (optional)
