@@ -9,70 +9,66 @@ repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --de
 crave run --no-patch -- "
     cd /tmp/src/android
 
-    # Function to clean and reset repositories
-    clean_and_reset_repos() {
-        repo forall -c 'git clean -fdx && git reset --hard'
-    }
+   # Function to clean and reset repositories
+clean_and_reset_repos() {
+    repo forall -c 'git clean -fdx && git reset --hard'
+}
 
-    # Function to sync specific repositories
-    sync_specific_repo() {
-        local repo_path=\$1
-        repo sync -c --force-sync --no-clone-bundle --no-tags --prune --fail-fast \$repo_path
-    }
+# Function to sync specific repositories
+sync_specific_repo() {
+    local repo_path=$1
+    repo sync -c --force-sync --no-clone-bundle --no-tags --prune --fail-fast $repo_path
+}
 
-    # Clean untracked files and reset repositories
-    clean_and_reset_repos
+# Step 1: Initialize the repo with the SuperiorOS manifest
+repo init -u https://github.com/SuperiorOS/manifest.git -b fourteen --git-lfs
 
-    # Sync the entire repo with verbose output for debugging
-    repo sync -c -j1 --force-sync --no-clone-bundle --no-tags --prune --fetch-submodules --fail-fast --verbose || true
+# Step 2: Sync the entire repo with verbose output for debugging
+repo sync --force-sync --no-clone-bundle --no-tags --prune --fetch-submodules --verbose || true
 
-    # Handle specific problematic repositories
-    sync_specific_repo external/rust/cxx/tools/buck/prelude
-    sync_specific_repo art
+# Step 3: Clean and reset repositories if necessary
+clean_and_reset_repos
 
-    # Clean and reset again to ensure a clean state
-    clean_and_reset_repos
+# Handle specific problematic repositories
+sync_specific_repo external/rust/cxx/tools/buck/prelude
+sync_specific_repo art
 
-    # Remove existing local_manifests and repo objects
-    rm -rf .repo/local_manifests
-    rm -rf .repo/project-objects/*
-    rm -rf .repo/projects/*
-    rm -rf .repo/repo/
+# Clean and reset again to ensure a clean state
+clean_and_reset_repos
 
-    # Reinitialize repo
-    repo init -u https://github.com/SuperiorOS/manifest -b fourteen --git-lfs --depth=1
+# Remove existing local_manifests and repo objects
+rm -rf .repo/local_manifests
+rm -rf .repo/project-objects/*
+rm -rf .repo/projects/*
+rm -rf .repo/repo/
 
-    # Clone local_manifests repository
-    git clone https://github.com/mdalam073/local_manifest --depth 1 -b superior-tissot .repo/local_manifests
+# Reinitialize repo
+repo init -u https://github.com/SuperiorOS/manifest.git -b fourteen --git-lfs
 
-    # Clean untracked files before syncing
-    clean_and_reset_repos
+# Clone local_manifests repository
+git clone https://github.com/mdalam073/local_manifest --depth 1 -b superior-tissot .repo/local_manifests
 
-    # Sync the repositories with verbose output for debugging and fail fast
-    repo sync -c -j1 --force-sync --no-clone-bundle --no-tags --prune --fetch-submodules --fail-fast --verbose
+# Clean untracked files before syncing
+clean_and_reset_repos
 
-    # Clean untracked files and reset repository
-    clean_and_reset_repos
+# Sync the repositories with verbose output for debugging and fail fast
+repo sync --force-sync --no-clone-bundle --no-tags --prune --fetch-submodules --verbose
 
-    # Clean previous build artifacts
-    make clean
+# Ensure the 'build/make/core/main.mk' file exists
+if [ ! -f build/make/core/main.mk ]; then
+    echo 'Error: build/make/core/main.mk not found. Sync may have failed.'
+    exit 1
+fi
 
-    # Set up build environment
-    source build/envsetup.sh
+# Step 4: Set up the build environment
+source build/envsetup.sh
 
-    # Lunch configuration
-    lunch superior_tissot-userdebug
+# Step 5: Configure the build for the specific device 
+breakfast tissot-userdebug
 
-    # Change to the root directory
-    croot
-
-    # Install and pull Git LFS files
-    repo forall -c 'git lfs install && git lfs pull && git lfs checkout'
-
-    # Start the build process using make bacon
-    make bacon
+# Step 6: Start the build process using make bacon
+m bacon
 "
-
 # Clean up (optional)
 # rm -rf tissot/*
 
