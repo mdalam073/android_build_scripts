@@ -64,7 +64,7 @@ crave run --no-patch -- "
     source build/envsetup.sh
 
     # Step 5: Configure the build for the specific device (replace 'tissot' with your device codename)
-    breakfast tissot-userdebug
+    lunch superior_tissot-userdebug
 
     # Step 6: Start the build process using make bacon
     m bacon
