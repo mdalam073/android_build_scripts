@@ -20,14 +20,11 @@ crave run --no-patch -- "
         repo sync -c --force-sync --no-clone-bundle --no-tags --prune --fail-fast \$repo_path
     }
 
-    # Step 1: Initialize the repo with the SuperiorOS manifest
-    repo init -u https://github.com/SuperiorOS/manifest.git -b fourteen --git-lfs
-
-    # Step 2: Sync the entire repo with verbose output for debugging
-    repo sync --force-sync --no-clone-bundle --no-tags --prune --fetch-submodules --verbose || true
-
-    # Step 3: Clean and reset repositories if necessary
+    # Initial clean and reset of repositories
     clean_and_reset_repos
+
+    # Initial sync with verbose output for debugging
+    repo sync -c -j1 --force-sync --no-clone-bundle --no-tags --prune --fetch-submodules --fail-fast --verbose || true
 
     # Handle specific problematic repositories
     sync_specific_repo external/rust/cxx/tools/buck/prelude
@@ -36,23 +33,23 @@ crave run --no-patch -- "
     # Clean and reset again to ensure a clean state
     clean_and_reset_repos
 
-    # Remove existing local_manifests and repo objects
+    # Remove existing local_manifests and repo objects to avoid conflicts
     rm -rf .repo/local_manifests
     rm -rf .repo/project-objects/*
     rm -rf .repo/projects/*
     rm -rf .repo/repo/
 
     # Reinitialize repo
-    repo init -u https://github.com/SuperiorOS/manifest.git -b fourteen --git-lfs
+    repo init -u https://github.com/SuperiorOS/manifest -b fourteen --git-lfs --depth=1
 
     # Clone local_manifests repository
     git clone https://github.com/mdalam073/local_manifest --depth 1 -b superior-tissot .repo/local_manifests
 
-    # Clean untracked files before syncing
+    # Clean untracked files before final sync
     clean_and_reset_repos
 
-    # Sync the repositories with verbose output for debugging and fail fast
-    repo sync --force-sync --no-clone-bundle --no-tags --prune --fetch-submodules --verbose
+    # Final sync with verbose output for debugging and fail fast
+    repo sync -c -j1 --force-sync --no-clone-bundle --no-tags --prune --fetch-submodules --fail-fast --verbose
 
     # Ensure the 'build/make/core/main.mk' file exists
     if [ ! -f build/make/core/main.mk ]; then
@@ -60,14 +57,26 @@ crave run --no-patch -- "
         exit 1
     fi
 
-    # Step 4: Set up the build environment
+    # Clean previous build artifacts
+    make clean
+
+    # Set up build environment
     source build/envsetup.sh
 
-    # Step 5: Configure the build for the specific device (replace 'tissot' with your device codename)
+    # Lunch configuration
     lunch superior_tissot-userdebug
 
-    # Step 6: Start the build process using make bacon
-    m bacon
+    # Set TARGET_RELEASE to ap1a
+    export TARGET_RELEASE=ap1a
+
+    # Change to the root directory
+    croot
+
+    # Install and pull Git LFS files
+    repo forall -c 'git lfs install && git lfs pull && git lfs checkout'
+
+    # Start the build process using the recommended method
+    build/soong/soong_ui.bash --make-mode bacon
 "
 # Clean up (optional)
 # rm -rf tissot/*
