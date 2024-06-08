@@ -78,6 +78,7 @@ crave run --no-patch -- "
     # Start the build process using the recommended method
     build/soong/soong_ui.bash --make-mode bacon
 "
+
 # Clean up (optional)
 # rm -rf tissot/*
 
