@@ -5,80 +5,87 @@ set -e
 # Initialize repo with the first manifest
 repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
 
+LOG_FILE="build.log"
+REPO_URL="https://github.com/SuperiorOS/manifest"
+BRANCH="fourteen"
+LOCAL_MANIFEST_URL="https://github.com/mdalam073/local_manifest"
+LOCAL_MANIFEST_BRANCH="superior-tissot"
+
+log() {
+    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a $LOG_FILE
+}
+
+log "Starting the build script"
+
+# Initialize repo with the SuperiorOS manifest
+log "Initializing repo with the SuperiorOS manifest"
+repo init -u $REPO_URL -b $BRANCH --git-lfs --depth=1
+
 # Run inside foss.crave.io devspace, in the project folder
 crave run --no-patch -- "
     cd /tmp/src/android
 
-    # Function to clean and reset repositories
     clean_and_reset_repos() {
         repo forall -c 'git clean -fdx && git reset --hard'
     }
 
-    # Function to sync specific repositories
     sync_specific_repo() {
         local repo_path=\$1
         repo sync -c --force-sync --no-clone-bundle --no-tags --prune --fail-fast \$repo_path
     }
 
-    # Initial clean and reset of repositories
     clean_and_reset_repos
 
-    # Initial sync with verbose output for debugging
+    log 'Initial sync with verbose output for debugging'
     repo sync -c -j1 --force-sync --no-clone-bundle --no-tags --prune --fetch-submodules --fail-fast --verbose || true
 
-    # Handle specific problematic repositories
     sync_specific_repo external/rust/cxx/tools/buck/prelude
     sync_specific_repo art
 
-    # Clean and reset again to ensure a clean state
     clean_and_reset_repos
 
-    # Remove existing local_manifests and repo objects to avoid conflicts
+    log 'Removing existing local_manifests and repo objects to avoid conflicts'
     rm -rf .repo/local_manifests
     rm -rf .repo/project-objects/*
     rm -rf .repo/projects/*
     rm -rf .repo/repo/
 
-    # Reinitialize repo
-    repo init -u https://github.com/SuperiorOS/manifest -b fourteen --git-lfs --depth=1
+    log 'Reinitializing repo'
+    repo init -u $REPO_URL -b $BRANCH --git-lfs --depth=1
 
-    # Clone local_manifests repository
-    git clone https://github.com/mdalam073/local_manifest --depth 1 -b superior-tissot .repo/local_manifests
+    log 'Cloning local_manifests repository'
+    git clone $LOCAL_MANIFEST_URL --depth 1 -b $LOCAL_MANIFEST_BRANCH .repo/local_manifests
 
-    # Clean untracked files before final sync
     clean_and_reset_repos
 
-    # Final sync with verbose output for debugging and fail fast
+    log 'Final sync with verbose output for debugging and fail fast'
     repo sync -c -j1 --force-sync --no-clone-bundle --no-tags --prune --fetch-submodules --fail-fast --verbose
 
-    # Ensure the 'build/make/core/main.mk' file exists
     if [ ! -f build/make/core/main.mk ]; then
-        echo 'Error: build/make/core/main.mk not found. Sync may have failed.'
+        log 'Error: build/make/core/main.mk not found. Sync may have failed.'
         exit 1
     fi
 
-    # Clean previous build artifacts
     make clean
 
-    # Set up build environment
     source build/envsetup.sh
 
-    # Lunch configuration
-    lunch superior_tissot-userdebug
+    if ! lunch superior_tissot-userdebug; then
+        log 'Invalid lunch combo: superior_tissot-userdebug'
+        exit 1
+    fi
 
-    # Set TARGET_RELEASE to ap1a
     export TARGET_RELEASE=ap1a
 
-    # Change to the root directory
     croot
 
-    # Install and pull Git LFS files
     repo forall -c 'git lfs install && git lfs pull && git lfs checkout'
 
-    # Start the build process using the recommended method
+    log 'Starting the build process with soong and ninja'
     build/soong/soong_ui.bash --make-mode bacon
 "
 
+log "Build script completed"
 # Clean up (optional)
 # rm -rf tissot/*
 
