@@ -2,6 +2,10 @@
 
 set -e
 
+# Initialize repo with the first manifest
+log "Initializing repo with the PixelOS manifest"
+repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
+
 LOG_FILE="build.log"
 REPO_URL="https://github.com/SuperiorOS/manifest"
 BRANCH="fourteen"
@@ -14,9 +18,6 @@ log() {
 
 log "Starting the build script"
 
-# Initialize repo with the first manifest
-log "Initializing repo with the PixelOS manifest"
-repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
 
 # Initialize repo with the SuperiorOS manifest
 log "Initializing repo with the SuperiorOS manifest"
