@@ -2,9 +2,6 @@
 
 set -e
 
-# Initialize repo with the first manifest
-repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
-
 LOG_FILE="build.log"
 REPO_URL="https://github.com/SuperiorOS/manifest"
 BRANCH="fourteen"
@@ -17,11 +14,16 @@ log() {
 
 log "Starting the build script"
 
+# Initialize repo with the first manifest
+log "Initializing repo with the PixelOS manifest"
+repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
+
 # Initialize repo with the SuperiorOS manifest
 log "Initializing repo with the SuperiorOS manifest"
 repo init -u $REPO_URL -b $BRANCH --git-lfs --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
+log "Running Crave environment setup"
 crave run --no-patch -- "
     cd /tmp/src/android
 
@@ -84,6 +86,9 @@ crave run --no-patch -- "
     log 'Starting the build process with soong and ninja'
     build/soong/soong_ui.bash --make-mode bacon
 "
+
+log "Build script completed"
+
 
 log "Build script completed"
 # Clean up (optional)
