@@ -7,7 +7,15 @@ repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --de
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
-crave run --no-patch -- "rm -rf .repo/local_manifests && \
+crave run --no-patch -- "# Clean and reset again to ensure a clean state
+    clean_and_reset_repos && \
+
+    # Remove existing local_manifests and repo objects
+    rm -rf .repo/local_manifests && \
+    rm -rf .repo/project-objects/* && \
+    rm -rf .repo/projects/* && \
+    rm -rf .repo/repo/ && \
+
 # Initialize repo with specified manifest
 repo init -u https://github.com/VoltageOS/manifest.git -b 14 --git-lfs --depth=1 ;\
 
