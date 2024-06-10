@@ -7,54 +7,45 @@ repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --de
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
-crave run --no-patch -- "# Clean and reset again to ensure a clean state
-    clean_and_reset_repos && \
-
-    # Remove existing local_manifests and repo objects
+crave run --no-patch -- "
+    # Clean and reset repo manually
+    echo 'Cleaning and resetting repo...' && \
     rm -rf .repo/local_manifests && \
     rm -rf .repo/project-objects/* && \
     rm -rf .repo/projects/* && \
     rm -rf .repo/repo/ && \
+    
+    # Reinitialize repo with specified manifest
+    repo init -u https://github.com/VoltageOS/manifest.git -b 14 --git-lfs --depth=1 && \
+    
+    # Clone local_manifests repository
+    git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 .repo/local_manifests && \
+    
+    # Sync the repositories
+    repo sync -j$(nproc) --force-sync && \ 
+    
+    # Set up build environment
+    source build/envsetup.sh && \
+    
+    # Lunch configuration
+    lunch voltage_tissot-ap1a-userdebug && \
+    
+    # Build
+    croot && \
+    mka bacon
 
-# Initialize repo with specified manifest
-repo init -u https://github.com/VoltageOS/manifest.git -b 14 --git-lfs --depth=1 ;\
+    # Pull generated zip files
+    crave pull out/target/product/*/*.zip"
 
-# Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 .repo/local_manifests ;\
+    # Pull generated img files
+    crave pull out/target/product/*/*.img
 
-# Sync the repositories
-/opt/crave/resync.sh && \ 
+    # Upload zips to Telegram
+    # telegram-upload --to sdreleases out/target/product/*/*.zip
 
+    # Upload to Github Releases
+    # curl -sf https://raw.githubusercontent.com/Meghthedev/Releases/main/headless.sh | sh
+"
 
-# Set up build environment
-source build/envsetup.sh && \
-
-# Lunch configuration
-lunch voltage_tissot-ap1a-userdebug ;\
-
-croot ;\
-mka bacon ; \
-# echo "Date and time:" ; \
-
-# Print out/build_date.txt
-# cat out/build_date.txt; \
-
-# Print SHA256
-# sha256sum out/target/product/*/*.zip"
-
-# Clean up
-# rm -rf tissot/*
-
-
-
-# Pull generated zip files
-# crave pull out/target/product/*/*.zip
-
-# Pull generated img files
-# crave pull out/target/product/*/*.img
-
-# Upload zips to Telegram
-# telegram-upload --to sdreleases tissot/*.zip
-
-#Upload to Github Releases
-#curl -sf https://raw.githubusercontent.com/Meghthedev/Releases/main/headless.sh | sh
+# Clean up build artifacts (if needed)
+# rm -rf out/target/product/*
