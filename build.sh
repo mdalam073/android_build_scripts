@@ -7,29 +7,35 @@ repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --de
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
-crave run --no-patch -- "rm -rf .repo/local_manifests \
-rm -rf .repo/project-objects/* \
-rm -rf .repo/projects/* \
-rm -rf .repo/repo/ && \
+crave run --no-patch -- "
+rm -rf .repo/local_manifests &&
+rm -rf .repo/project-objects/* &&
+rm -rf .repo/projects/* &&
+rm -rf .repo/repo/ &&
+
 # Initialize repo with specified manifest
-repo init -u https://github.com/VoltageOS/manifest -b 14 --git-lfs --depth=1 && \
-    
+repo init -u https://github.com/VoltageOS/manifest -b 14 --git-lfs --depth=1 &&
+
 # Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 .repo/local_manifests && \
-    
+git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 .repo/local_manifests &&
+
 # Sync the repositories
-/opt/crave/resync.sh && \
+/opt/crave/resync.sh &&
+
+# Clean untracked files to avoid checkout issues
+repo forall -c 'git clean -fdx' &&
 
 # Set up build environment
-source build/envsetup.sh && \
-    
+source build/envsetup.sh &&
+
 # Lunch configuration
-lunch voltage_tissot-ap1a-userdebug && \
-    
+lunch voltage_tissot-ap1a-userdebug &&
+
 # Build
-croot \
-repo forall -c 'git lfs install && git lfs pull && git lfs checkout' \
-mka bacon"
+croot &&
+repo forall -c 'git lfs install && git lfs pull && git lfs checkout' &&
+mka bacon
+"
 
 # Pull generated zip files
 crave pull out/target/product/*/*.zip
