@@ -23,6 +23,10 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 # Clean untracked files to avoid checkout issues
 repo forall -c 'git clean -fdx' &&
 
+# Generate keys after completing the sync process
+cd /tmp/src/android/vendor/voltage-priv/keys
+./gen_keys
+
 # Set up build environment
 source build/envsetup.sh &&
 
