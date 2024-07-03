@@ -6,7 +6,10 @@ set -e
 repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
-crave run --no-patch -- " 
+crave run --no-patch -- "rm -rf .repo/local_manifests && \
+rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git && \
+rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git && \
+
 # Initialize repo with specified manifest
 repo init -u https://github.com/PixelOS-AOSP/manifest.git -b fourteen --git-lfs --depth=1 && \
 
