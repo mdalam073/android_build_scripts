@@ -23,7 +23,7 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b pixelos .repo
 . build/envsetup.sh && \
 
 # Lunch configuration
-lunch aosp_tissot-ap2a-userdebug && \
+lunch aosp_tissot-ap1a-userdebug && \
 
 # Change root to build environment
 croot && \
