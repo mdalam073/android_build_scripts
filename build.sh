@@ -6,30 +6,35 @@ set -e
 repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
-crave run --no-patch -- "rm -rf .repo/local_manifests && \
-rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git && \
-rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git && \
+crave run --no-patch -- "
+    # Clean up local manifests and prebuilts
+    rm -rf .repo/local_manifests &&
+    rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git &&
+    rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git &&
 
-# Initialize repo with specified manifest
-repo init -u https://github.com/PixelOS-AOSP/manifest.git -b fourteen --git-lfs --depth=1 && \
+    # Initialize repo with specified manifest
+    repo init -u https://github.com/PixelOS-AOSP/manifest.git -b fourteen --git-lfs --depth=1 &&
 
-# Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest --depth 1 -b pixelos .repo/local_manifests && \
+    # Clone local_manifests repository
+    git clone https://github.com/mdalam073/local_manifest --depth 1 -b pixelos .repo/local_manifests &&
 
-# Sync the repositories
-/opt/crave/resync.sh && \
+    # Sync the repositories
+    /opt/crave/resync.sh &&
 
-# Set up build environment
-. build/envsetup.sh && \
+    # Remove conflicting libmegface definition
+    sed -i '/LOCAL_MODULE := libmegface/,+5d' packages/apps/ParanoidSense/Android.mk &&
 
-# Lunch configuration
-lunch aosp_tissot-ap2a-userdebug && \
+    # Set up build environment
+    . build/envsetup.sh &&
 
-# Change root to build environment
-croot && \
+    # Lunch configuration
+    lunch aosp_tissot-ap2a-userdebug &&
 
-# Build the target
-mka bacon 
+    # Change root to build environment
+    croot &&
+
+    # Build the target
+    mka bacon
 "
 # Print SHA256 checksums of all .zip files in the output directory
 sha256sum out/target/product/*/*.zip && \
