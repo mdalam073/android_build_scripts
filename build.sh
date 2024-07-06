@@ -6,8 +6,7 @@ set -e
 repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
-crave run --no-patch -- "
-    # Clean up local manifests and prebuilts
+crave run --no-patch -- # Clean up local manifests and prebuilts
     rm -rf .repo/local_manifests &&
     rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git &&
     rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git &&
@@ -21,8 +20,10 @@ crave run --no-patch -- "
     # Sync the repositories
     /opt/crave/resync.sh &&
 
-    # Remove conflicting libmegface definition
-    sed -i '/LOCAL_MODULE := libmegface/,+5d' packages/apps/ParanoidSense/Android.mk &&
+    # Remove conflicting libmegface definition if the file exists
+    if [ -f packages/apps/ParanoidSense/Android.mk ]; then
+        sed -i '/LOCAL_MODULE := libmegface/,+5d' packages/apps/ParanoidSense/Android.mk
+    fi &&
 
     # Set up build environment
     . build/envsetup.sh &&
