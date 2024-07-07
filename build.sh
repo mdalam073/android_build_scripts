@@ -2,11 +2,18 @@
 
 set -e
 
+# Function to ensure date is correctly formatted
+function ensure_date_format() {
+    export LC_ALL=C
+    DATE=$(date +'%Y-%m-%d %H:%M:%S %Z' 2>/dev/null) || DATE=$(date)
+    echo "Current date and time: $DATE"
+}
+
 # Initialize repo with specified manifest
 repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
-crave run --no-patch -- "
+crave run --no-patch -- bash -c "
     # Clean up local manifests and prebuilts
     rm -rf .repo/local_manifests &&
     rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git &&
@@ -21,18 +28,16 @@ crave run --no-patch -- "
     # Sync the repositories
     /opt/crave/resync.sh &&
 
-    # Locate and remove conflicting libmegface definition
-    FILE_PATH=\$(grep -rl 'LOCAL_MODULE := libmegface' .)
-    if [ -n \"\$FILE_PATH\" ]; then
-        sed -i '/LOCAL_MODULE := libmegface/,+5d' \$FILE_PATH
-    else
-        echo 'libmegface definition not found.'
-    fi &&
+    # Ensure correct date format
+    ensure_date_format &&
 
-    # Set the correct date format
-    export LC_ALL=C
-    DATE=\$(date +'%Y-%m-%d %H:%M:%S %Z')
-    echo \"Current date and time: \$DATE\"
+    # Locate and remove conflicting libmegface definition
+    grep -rl 'LOCAL_MODULE := libmegface' . | while read -r FILE; do
+        if grep -q 'LOCAL_MODULE := libmegface' \"$FILE\"; then
+            sed -i '/LOCAL_MODULE := libmegface/,+5d' \"$FILE\"
+            echo \"Removed libmegface definition from $FILE\"
+        fi
+    done &&
 
     # Set up build environment
     . build/envsetup.sh &&
