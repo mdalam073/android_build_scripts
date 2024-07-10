@@ -21,10 +21,6 @@ crave run --no-patch -- "
     # Sync the repositories
     /opt/crave/resync.sh &&
 
-    # Ensure correct date format
-    echo "Date and time:" &&
-    ensure_date_format &&
-
     # Set up build environment
     . build/envsetup.sh &&
 
