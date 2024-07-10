@@ -6,14 +6,7 @@ set -e
 repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
-crave run --no-patch -- bash -c "
-    # Function to ensure date is correctly formatted
-    function ensure_date_format() {
-        export LC_ALL=C
-        DATE=\$(date +'%Y-%m-%d %H:%M:%S %Z' 2>/dev/null) || DATE=\$(date)
-        echo \"Current date and time: \$DATE\"
-    }
-
+crave run --no-patch -- "
     # Clean up local manifests and prebuilts
     rm -rf .repo/local_manifests &&
     rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git &&
@@ -29,15 +22,8 @@ crave run --no-patch -- bash -c "
     /opt/crave/resync.sh &&
 
     # Ensure correct date format
+    echo "Date and time:" &&
     ensure_date_format &&
-
-    # Locate and remove conflicting libmegface definition
-    grep -rl 'LOCAL_MODULE := libmegface' . | while read -r FILE; do
-        if grep -q 'LOCAL_MODULE := libmegface' \"\$FILE\"; then
-            sed -i '/LOCAL_MODULE := libmegface/,+5d' \"\$FILE\"
-            echo \"Removed libmegface definition from \$FILE\"
-        fi
-    done &&
 
     # Set up build environment
     . build/envsetup.sh &&
@@ -50,7 +36,7 @@ crave run --no-patch -- bash -c "
 
     # Build the target
     mka bacon
-"
+'
 # Print SHA256 checksums of all .zip files in the output directory
 sha256sum out/target/product/*/*.zip && \
 
