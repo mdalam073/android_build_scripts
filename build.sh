@@ -32,7 +32,7 @@ crave run --no-patch -- "
 
     # Build the target
     mka bacon
-'
+"
 # Print SHA256 checksums of all .zip files in the output directory
 sha256sum out/target/product/*/*.zip && \
 
