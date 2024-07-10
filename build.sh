@@ -6,7 +6,7 @@ set -e
 repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
-crave run --no-patch -- bash -c "
+crave run --no-patch -- "
     # Clean up local manifests and prebuilts
     rm -rf .repo/local_manifests &&
     rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git &&
