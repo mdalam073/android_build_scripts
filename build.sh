@@ -19,7 +19,7 @@ crave run --no-patch -- "
     git clone https://github.com/mdalam073/local_manifest --depth 1 -b pixelos .repo/local_manifests &&
 
     # Sync the repositories
-    /opt/crave/resync.sh &&
+    /opt/crave/resynctest.sh &&
 
     # Set up build environment
     . build/envsetup.sh &&
