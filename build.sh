@@ -21,14 +21,6 @@ crave run --no-patch -- "
     # Sync the repositories
     /opt/crave/resynctest.sh &&
 
-        # Comment out conflicting libmegface definitions in Android.bp
-    for file in packages/apps/ParanoidSense/Android.bp hardware/xiaomi/megvii/Android.bp; do
-        if [ -f "$file" ]; then
-            sed -i "/cc_library_shared.*name: \"libmegface\"/,/}/ s/^/#/" "$file"
-            echo "Commented out libmegface definition from $file"
-        fi
-    done &&
-
     # Set up build environment
     . build/envsetup.sh &&
 
