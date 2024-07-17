@@ -11,7 +11,7 @@ crave run --no-patch -- "
     rm -rf .repo/local_manifests &&
     rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git &&
     rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git &&
-
+   
     # Initialize repo with specified manifest
     repo init -u https://github.com/PixelOS-AOSP/manifest.git -b fourteen --git-lfs --depth=1 &&
 
@@ -26,7 +26,10 @@ crave run --no-patch -- "
 
     # Lunch configuration
     lunch aosp_tissot-ap2a-userdebug &&
-
+ 
+    # Set environment variable to allow missing dependencies
+    export ALLOW_MISSING_DEPENDENCIES=true &&
+    
     # Change root to build environment
     croot &&
     
