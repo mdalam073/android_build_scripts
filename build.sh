@@ -24,7 +24,7 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 source build/envsetup.sh &&
 
 # Lunch configuration
-lunch voltage_tissot-ap1a-userdebug &&
+lunch voltage_tissot-ap2a-userdebug &&
 
 # Build
 croot &&
