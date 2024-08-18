@@ -23,9 +23,6 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 # Set up build environment
 source build/envsetup.sh &&
 
-# Allow missing dependencies
-export ALLOW_MISSING_DEPENDENCIES=true &&
-
 # Lunch configuration
 lunch voltage_tissot-ap2a-userdebug &&
 
