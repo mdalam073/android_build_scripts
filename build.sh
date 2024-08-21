@@ -7,7 +7,8 @@ repo init -u https://github.com/PixelOS-AOSP/manifest -b fourteen --git-lfs --de
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
-crave run --no-patch -- "rm -rf .repo/local_manifests && 
+crave run --no-patch -- "
+rm -rf .repo/local_manifests &&
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git &&
 rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git &&
 
@@ -19,6 +20,18 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 
 # Sync the repositories
 /opt/crave/resync.sh &&
+
+# Clean the build output directory to avoid conflicts
+rm -rf out/* &&
+
+# Remove any leftover build files from previous builds
+find . -name '*.ninja' -exec rm -rf {} + &&
+find . -name '*.o' -exec rm -rf {} + &&
+find . -name '*.so' -exec rm -rf {} + &&
+find . -name '*.a' -exec rm -rf {} + &&
+
+# Clean previous build intermediates
+make clobber &&
 
 # Set up build environment
 source build/envsetup.sh &&
