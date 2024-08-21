@@ -20,10 +20,10 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 /opt/crave/resync.sh &&
 
 # Set up build environment
-	. build/envsetup.sh &&
+. build/envsetup.sh &&
 
 # Lunch configuration
-	brunch tissot &&
+brunch tissot &&
 
 # Build
 croot &&
