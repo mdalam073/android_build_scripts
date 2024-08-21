@@ -19,15 +19,6 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 # Sync the repositories
 /opt/crave/resync.sh &&
 
-# Clean the build output directory to avoid conflicts
-rm -rf out/* &&
-
-# Remove any leftover build files from previous builds
-find . -name '*.ninja' -exec rm -rf {} + &&
-find . -name '*.o' -exec rm -rf {} + &&
-find . -name '*.so' -exec rm -rf {} + &&
-find . -name '*.a' -exec rm -rf {} + &&
-
 # Set up build environment
 source build/envsetup.sh &&
 
