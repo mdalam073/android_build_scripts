@@ -22,6 +22,9 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b voltageos-14 
 # Set up build environment
 . build/envsetup.sh &&
 
+# remove key folder
+rm -rf vendor/voltage-priv/keys &&
+
 # Lunch configuration
 brunch tissot &&
 
