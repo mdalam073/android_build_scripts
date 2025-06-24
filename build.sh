@@ -1,52 +1,94 @@
 #!/bin/bash
 
-set -e
+rm -rf .repo/local_manifests/
+rm -rf device/realme/RMX1971
+rm -rf vendor/realme/RMX1971
+rm -rf prebuilts/clang/host/linux-x86
+# Rom source repo
+repo init -u https://github.com/AxionAOSP/android.git -b lineage-22.2 --git-lfs
 
-# Initialize repo with specified manifest
-repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs --depth=1
+echo "=================="
+echo "Repo init success"
+echo "=================="
 
-# Run inside foss.crave.io devspace, in the project folder
-# Remove existing local_manifests
-crave run --no-patch -- "rm -rf .repo/local_manifests && \
-# Initialize repo with specified manifest
-repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14 --depth=1 ;\
 
-# Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest --depth 1 -b Derp-14-tissot .repo/local_manifest ;\
+# Clone All Repositories
+git clone https://github.com/kdrag0n/proton-clang --depth 1  prebuilts/clang/host/linux-x86/clang-proton
+git clone https://github.com/dain09/device_realme_RMX1971 -baxion-1.6 --depth 1 device/realme/RMX1971
+git clone https://github.com/dain09/vendor_realme_RMX1971 --depth 1 -b15 vendor/realme/RMX1971
+git clone https://github.com/dain09/android_kernel_realme_sdm710 -b14-r5p --depth 1 kernel/realme/sdm710
+
+echo "============================"
+echo "All Repositrories Cloned Successfuly"
+echo "============================"
 
 # Sync the repositories
-/opt/crave/resync.sh && \ 
+/opt/crave/resync.sh
+echo "============= Repo Sync Done =============="
 
+#fix for d2tw
+rm -rf frameworks/base
+git clone https://github.com/dain09/android_frameworks_base frameworks/base
+echo "============= dt2w fixed =============="
+echo ">>> Applying dt2w patch..."
 
+cd frameworks/base || { echo "frameworks/base not found!"; exit 1; }
+
+if curl -sL https://github.com/dain09/android_frameworks_base/commit/a4e27665c44301a7685abe377082b26d271f984f.patch | patch -p1 --dry-run > /dev/null; then
+    curl -sL https://github.com/dain09/android_frameworks_base/commit/a4e27665c44301a7685abe377082b26d271f984f.patch | patch -p1
+    echo "✓ dt2w patch applied successfully."
+else
+    echo "✓ dt2w patch already applied or conflicts exist."
+fi
+
+cd -
+
+# Export
+export BUILD_USERNAME=Dain
+export BUILD_HOSTNAME=crave
+export TZ=Africa/Egypt
+echo "======= Export Done ======"
+
+# for vanilla 
 # Set up build environment
-source build/envsetup.sh && \
+source build/envsetup.sh
+echo "====== Envsetup Done ======="
 
-# Lunch configuration
-lunch derp_tissot-ap1a-userdebug ;\
+#sign build 
+gk -s
 
-croot ;\
-mka derp ; \
-# echo "Date and time:" ; \
+# Lunch
+axion RMX1971 userdebug va
+echo "============="
 
-# Print out/build_date.txt
-# cat out/build_date.txt; \
+# Make cleaninstall
+make installclean
+echo "============="
 
-# Print SHA256
-# sha256sum out/target/product/*/*.zip"
+# Build rom
+ax -br
 
-# Clean up
-# rm -rf tissot/*
+#for vanilla & gapps
+rm -rf out/target/product/vanilla
+rm -rf out/target/product/gapps
+cd out/target/product && mv RMX1971 vanilla && cd ../../.. &&
 
+# Set up build environment gapps
+source build/envsetup.sh
+echo "====== Envsetup Done ======="
 
+#sign build 
+gk -s
 
-# Pull generated zip files
-# crave pull out/target/product/*/*.zip
+# Lunch
+axion RMX1971 userdebug gms core
+echo "============="
 
-# Pull generated img files
-# crave pull out/target/product/*/*.img
+# Make cleaninstall
+make installclean
+echo "============="
 
-# Upload zips to Telegram
-# telegram-upload --to sdreleases tissot/*.zip
+# Build rom
+ax -br
 
-#Upload to Github Releases
-#curl -sf https://raw.githubusercontent.com/mdalam073/Releases/main/headless.sh | sh
+cd out/target/product && mv RMX1971 gapps && cd ../../.."
