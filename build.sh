@@ -1,8 +1,8 @@
 #!/bin/bash
 
 rm -rf .repo/local_manifests/
-rm -rf device/realme/RMX1971
-rm -rf vendor/realme/RMX1971
+rm -rf device/xiaomi
+rm -rf vendor/xiaomi
 rm -rf prebuilts/clang/host/linux-x86
 # Rom source repo
 repo init -u https://github.com/AxionAOSP/android.git -b lineage-22.2 --git-lfs
@@ -14,9 +14,11 @@ echo "=================="
 
 # Clone All Repositories
 git clone https://github.com/kdrag0n/proton-clang --depth 1  prebuilts/clang/host/linux-x86/clang-proton
-git clone https://github.com/dain09/device_realme_RMX1971 -baxion-1.6 --depth 1 device/realme/RMX1971
-git clone https://github.com/dain09/vendor_realme_RMX1971 --depth 1 -b15 vendor/realme/RMX1971
-git clone https://github.com/dain09/android_kernel_realme_sdm710 -b14-r5p --depth 1 kernel/realme/sdm710
+git clone https://github.com/mdalam073/device_xiaomi_tissot_e -b Axion --depth 1 device/xiaomi/tissot
+git clone https://github.com/mdalam073/device_xiaomi_msm8953-common_e -b vic --depth 1 device/xiaomi/msm8953-common
+git clone https://https://github.com/mdalam073/vendor_xiaomi_tissot -b vic --depth 1 vendor/xiaomi/tissot
+git clone https://https://github.com/mdalam073/vendor_xiaomi_msm8953-common_e -b vic --depth 1 vendor/xiaomi/msm8953-common
+git clone https://https://github.com/mdalam073/kernel_xiaomi_tissot -b vic --depth 1 kernel/xiaomi/msm8953
 
 echo "============================"
 echo "All Repositrories Cloned Successfuly"
