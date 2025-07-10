@@ -7,10 +7,10 @@ crave run --no-patch -- "
 rm -rf .repo/local_manifests &&
 
 # Initialize repo with specified manifest
-repo init -u https://github.com/LineageOS/android.git -b lineage-22.2 --git-lfs &&
+repo init -u https://github.com/AxionAOSP/android.git -b lineage-22.2 --git-lfs &&
 
 # Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest --depth 1 -b a15 .repo/local_manifests &&
+git clone https://github.com/mdalam073/local_manifest --depth 1 -b Axion .repo/local_manifests &&
 
 # Sync the repositories
 /opt/crave/resync.sh &&
@@ -19,11 +19,11 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b a15 .repo/loc
 . build/envsetup.sh &&
 
 # Lunch configuration
-lunch lineage_tissot-ap4a-eng &&
+axion tissot userdebug va &&
 
 # Build
 croot &&
-mka bacon
+ax -br
 "
 
 # Pull generated zip files
