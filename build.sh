@@ -7,23 +7,23 @@ crave run --no-patch -- "
 rm -rf .repo/local_manifests &&
 
 # Initialize repo with specified manifest
-repo init -u https://github.com/AxionAOSP/android.git -b lineage-22.2 --git-lfs &&
+repo init --no-repo-verify --git-lfs -u https://github.com/ProjectInfinity-X/manifest -b 15 -g default,-mips,-darwin,-notdefault &&
 
 # Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest --depth 1 -b Axion .repo/local_manifests &&
+git clone https://github.com/mdalam073/local_manifest --depth 1 -b infinity-15 .repo/local_manifests &&
 
 # Sync the repositories
-repo sync --force-sync &&
+repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) &&
 
 # Set up build environment
 . build/envsetup.sh &&
 
 # Lunch configuration
-axion tissot userdebug va &&
+lunch infinity_tissot-userdebug &&
 
 # Build
 croot &&
-ax -br
+mka bacon
 "
 
 # Pull generated zip files
