@@ -12,6 +12,10 @@ repo init --no-repo-verify --git-lfs -u https://github.com/ProjectInfinity-X/man
 # Clone local_manifests repository
 git clone https://github.com/mdalam073/local_manifest --depth 1 -b infinity-15 .repo/local_manifests &&
 
+rm -rf .repo/projects/prebuilts/clang/host/linux-x86.git
+rm -rf prebuilts/clang/host/linux-x86
+
+
 # Sync the repositories
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) &&
 
