@@ -7,10 +7,10 @@ crave run --no-patch -- "
 rm -rf .repo/local_manifests &&
 
 # Initialize repo with specified manifest
-repo init -u https://github.com/AxionAOSP/android.git -b lineage-22.2 --git-lfs &&
+repo init -u https://github.com/Project-Mist-OS/manifest -b 15 --git-lfs &&
 
 # Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest --depth 1 -b Axion .repo/local_manifests &&
+git clone https://github.com/mdalam073/local_manifest --depth 1 -b Mist-15 .repo/local_manifests &&
 
 # Sync the repositories
 repo sync --force-sync &&
@@ -19,11 +19,11 @@ repo sync --force-sync &&
 . build/envsetup.sh &&
 
 # Lunch configuration
-axion tissot userdebug va &&
+mistify tissot user &&
 
 # Build
 croot &&
-ax -br
+mist b
 "
 
 # Pull generated zip files
