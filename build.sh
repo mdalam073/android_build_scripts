@@ -7,7 +7,7 @@ crave run --no-patch -- "
 rm -rf .repo/local_manifests &&
 
 # Initialize repo with specified manifest
-repo init -u https://github.com/Project-Mist-OS/manifest -b 15 --git-lfs &&
+repo init -u https://github.com/Project-Mist-OS/manifest.git -b 16 --git-lfs &&
 
 # Clone local_manifests repository
 git clone https://github.com/mdalam073/local_manifest --depth 1 -b Mist-15 .repo/local_manifests &&
