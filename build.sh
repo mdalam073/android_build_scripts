@@ -7,23 +7,23 @@ crave run --no-patch -- "
 rm -rf .repo/local_manifests &&
 
 # Initialize repo with specified manifest
-repo init -u https://github.com/Project-Mist-OS/manifest.git -b 16 --git-lfs &&
+repo init --git-lfs -u https://gitlab.com/CalyxOS/platform_manifest -b android15-qpr2 &&
 
 # Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest --depth 1 -b Mist-15 .repo/local_manifests &&
+git clone https://github.com/mdalam073/local_manifest --depth 1 -b calyx .repo/local_manifests &&
 
 # Sync the repositories
 repo sync --force-sync &&
 
 # Set up build environment
+./calyx/scripts/xiaomi/device.sh tissot &&
 . build/envsetup.sh &&
 
 # Lunch configuration
-mistify tissot user &&
+breakfast tissot user &&
 
 # Build
-croot &&
-mist b
+m
 "
 
 # Pull generated zip files
