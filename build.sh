@@ -15,6 +15,9 @@ git clone https://github.com/mdalam073/local_manifest --depth 1 -b a15 .repo/loc
 # Sync the repositories
 repo sync --force-sync &&
 
+# Timekeep 
+git clone --depth=1 --branch lineage-22.2 https://github.com/LineageOS/android_hardware_sony_timekeep hardware/sony/timekeep &&
+
 # Set up build environment
 . build/envsetup.sh &&
 
