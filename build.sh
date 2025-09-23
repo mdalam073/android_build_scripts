@@ -12,6 +12,8 @@ repo init -u https://github.com/crdroidandroid/android.git -b 15.0 --git-lfs &&
 # Clone local_manifests repository
 git clone https://github.com/mdalam073/local_manifest --depth 1 -b a15 .repo/local_manifests &&
 
+rm -rf prebuilts/clang/host/linux-x86 &&
+
 # Sync the repositories
 repo sync --force-sync &&
 
