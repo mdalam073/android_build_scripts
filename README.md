@@ -8,8 +8,8 @@ or if you have one running,
 ```tmux ls```
 ```tmux a -t <session number>```
 
-## Make and Enter a folder called evo
+## Make and Enter a folder 
 ```mkdir rom_name; cd rom_name```
 
 ## Pull and Run this script
-curl -sf https://raw.githubusercontent.com/mdalam073/android_build_scripts/crdroid-15/build.sh | sh
+$ curl -sf https://raw.githubusercontent.com/mdalam073/android_build_scripts/cr16/build.sh | sh
