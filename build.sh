@@ -7,10 +7,10 @@ crave run --no-patch -- "
 rm -rf .repo/local_manifests &&
 
 # Initialize repo with specified manifest
-repo init -u https://github.com/crdroidandroid/android.git -b 16.0 --git-lfs &&
+repo init -u https://github.com/Lunaris-AOSP/android -b 16 --git-lfs &&
 
 # Clone local_manifests repository
-git clone https://github.com/mdalam073/local_manifest --depth 1 -b a16 .repo/local_manifests &&
+git clone https://github.com/mdalam073/local_manifest --depth 1 -b lunaris-16 .repo/local_manifests &&
 
 rm -rf prebuilts/clang/host/linux-x86 &&
 
@@ -21,10 +21,11 @@ repo sync --force-sync &&
 git clone --depth=1 --branch lineage-22.2 https://github.com/LineageOS/android_hardware_sony_timekeep hardware/sony/timekeep &&
 
 # Set up build environment
-. build/envsetup.sh &&
+. b*/env* &&
 
 # Lunch configuration and build
-brunch tissot"
+lunch lineage_tissot-bp2a-user &&
+m lunaris"
 
 # Pull generated zip files
 crave pull out/target/product/*/*.zip
