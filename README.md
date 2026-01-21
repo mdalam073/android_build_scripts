@@ -12,4 +12,4 @@ or if you have one running,
 ```mkdir rom_name; cd rom_name```
 
 ## Pull and Run this script
-$ curl -sf https://raw.githubusercontent.com/mdalam073/android_build_scripts/cr16/build.sh | sh
+$ curl -sf https://raw.githubusercontent.com/mdalam073/android_build_scripts/lunaris-16/build.sh | sh
